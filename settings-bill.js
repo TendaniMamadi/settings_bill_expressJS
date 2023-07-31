@@ -1,3 +1,5 @@
+import moment from "moment/moment";
+
 export default function SettingsBill() {
 
     let smsCost;
@@ -41,7 +43,7 @@ export default function SettingsBill() {
         actionList.push({
             type: action,
             cost,
-            timestamp: new Date()
+            timestamp: moment().fromNow(),
         });
 
 

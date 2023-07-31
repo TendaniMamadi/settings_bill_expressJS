@@ -30,7 +30,7 @@ app.get('/', function (req, res) {
 });
 
 app.post('/settings', function (req, res) {
-
+ 
     settingsBill.setSettings({
 
         callCost: req.body.callCost,
