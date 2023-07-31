@@ -3,11 +3,11 @@ export default function SettingsBill() {
     let smsCost;
     let callCost;
     let warningLevel;
-    let criticalLevel; 
+    let criticalLevel;
 
     let actionList = [];
 
-    function setSettings (settings) {
+    function setSettings(settings) {
         smsCost = Number(settings.smsCost);
         callCost = Number(settings.callCost);
         warningLevel = settings.warningLevel;
@@ -15,7 +15,7 @@ export default function SettingsBill() {
     }
 
     function getSettings
-    () {
+        () {
         return {
             smsCost,
             callCost,
@@ -26,11 +26,15 @@ export default function SettingsBill() {
 
     function recordAction(action) {
 
+        if (grandTotal() >= criticalLevel) {
+            return
+        }
+
         let cost = 0;
-        if (action === 'sms'){
+        if (action === 'sms') {
             cost = smsCost;
         }
-        else if (action === 'call'){
+        else if (action === 'call') {
             cost = callCost;
         }
 
@@ -39,13 +43,15 @@ export default function SettingsBill() {
             cost,
             timestamp: new Date()
         });
+
+
     }
 
-    function actions(){
+    function actions() {
         return actionList;
     }
 
-    function actionsFor(type){
+    function actionsFor(type) {
         const filteredActions = [];
 
         // loop through all the entries in the action list 
@@ -89,26 +95,35 @@ export default function SettingsBill() {
     }
 
     function totals() {
-        let smsTotal = getTotal('sms')
-        let callTotal = getTotal('call')
+        let smsTotal = getTotal('sms').toFixed(2)
+        let callTotal = getTotal('call').toFixed(2)
         return {
             smsTotal,
             callTotal,
-            grandTotal : grandTotal()
+            grandTotal: grandTotal().toFixed(2)
         }
     }
 
-    function hasReachedWarningLevel(){
+    function hasReachedWarningLevel() {
         const total = grandTotal();
-        const reachedWarningLevel = total >= warningLevel 
+        const reachedWarningLevel = total >= warningLevel
             && total < criticalLevel;
 
         return reachedWarningLevel;
     }
 
-    function hasReachedCriticalLevel(){
+    function hasReachedCriticalLevel() {
         const total = grandTotal();
         return total >= criticalLevel;
+    }
+
+    function classNames() {
+        if (hasReachedCriticalLevel()) {
+            return "danger"
+        } else if (hasReachedWarningLevel()) {
+            return "warning"
+        }
+
     }
 
     return {
@@ -119,6 +134,7 @@ export default function SettingsBill() {
         actionsFor,
         totals,
         hasReachedWarningLevel,
-        hasReachedCriticalLevel
+        hasReachedCriticalLevel,
+        classNames
     }
 }

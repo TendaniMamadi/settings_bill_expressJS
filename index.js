@@ -23,7 +23,8 @@ app.use(bodyParser.json())
 app.get('/', function (req, res) {
     res.render('index', {
         settings: settingsBill.getSettings(),
-        totals: settingsBill.totals()
+        totals: settingsBill.totals(),
+        classNames: settingsBill.classNames()
     });
    // res.send('settings bill app') 
 });
@@ -53,6 +54,7 @@ app.post('/action', function (req, res) {
 app.get('/actions', function (req, res) {
 
     res.render('actions',{actions: settingsBill.actions()});
+  
 
 });
 
@@ -63,7 +65,7 @@ app.get('/actions/:actionType', function (req, res) {
 
 });
 
-const PORT = process.env.PORT || 3011;
+const PORT = process.env.PORT || 3012;
 
 app.listen(PORT, function (req, res) {
     console.log('App starting at port:', PORT);
