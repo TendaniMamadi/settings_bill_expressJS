@@ -32,6 +32,10 @@ export default function SettingsBill() {
             return
         }
 
+        if(callCost == 0 || smsCost == 0){
+            return undefined
+        }
+        
         let cost = 0;
         if (action === 'sms') {
             cost = smsCost;
@@ -43,7 +47,7 @@ export default function SettingsBill() {
         actionList.push({
             type: action,
             cost,
-            timestamp: moment().fromNow(),
+            timestamp: new Date()
         });
 
 
