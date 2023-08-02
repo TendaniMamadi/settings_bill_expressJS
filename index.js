@@ -2,6 +2,7 @@ import express from 'express';
 import {engine} from 'express-handlebars';
 import bodyParser from 'body-parser';
 import SettingsBill from './settings-bill.js';
+// import moment from "moment/moment.js";
 
 const app = express();
 const settingsBill = SettingsBill();
@@ -48,12 +49,31 @@ app.post('/action', function (req, res) {
     //capture the action call or sms
     settingsBill.recordAction(req.body.actionType)
 
+
+    
     res.redirect('/');
 });
 
 app.get('/actions', function (req, res) {
+// let dataSet = settingsBill.actions()
+    // for (let i = 0; i < dataSet.length; i++) {
+    //     const element = dataSet[i];
+    //     console.log(element);
+    //     element.timestamp = moment().format('MMMM Do YYYY, h:mm:ss a'); 
+    // }
+    // console.log(settingsBill.actions());
 
-    res.render('actions',{actions: settingsBill.actions()});
+    const realTime = settingsBill.actions().map(list => {
+
+        return{
+            type: list.action,
+            cost: list.cost,
+            timestamp: moment(list.timestamp).fromNow()
+        }
+    }) 
+
+
+    res.render('actions',{actions: realTime});
   
 
 });
