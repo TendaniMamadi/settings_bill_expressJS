@@ -37,20 +37,23 @@ export default function SettingsBill() {
         }
 
         let cost = 0;
-        if (action === 'sms') {
+        if (action === 'sms' && smsCost > 0) {
             cost = smsCost;
         }
-        else if (action === 'call') {
+        else if (action === 'call' && callCost > 0) {
             cost = callCost;
         }
 
     
+        if(action && cost >0){
 
-        actionList.push({
-            type: action,
-            cost: cost,
-            timestamp: new Date()
-        });
+
+            actionList.push({
+                type: action,
+                cost: cost,
+                timestamp: new Date()
+            });
+        }
 
 
     }
