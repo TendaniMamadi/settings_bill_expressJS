@@ -48,8 +48,6 @@ app.post('/settings', function (req, res) {
 app.post('/action', function (req, res) {
     //capture the action call or sms
     settingsBill.recordAction(req.body.actionType)
-
-
     
     res.redirect('/');
 });
