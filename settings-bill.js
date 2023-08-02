@@ -49,7 +49,7 @@ export default function SettingsBill() {
         actionList.push({
             type: action,
             cost: cost,
-            timestamp: moment().startOf('hour').fromNow()
+            timestamp: new Date()
         });
 
 
@@ -62,9 +62,18 @@ export default function SettingsBill() {
     function actionsFor(type) {
         const filteredActions = [];
 
+        const realTime = actionList.map(list => {
+
+            return{
+                type: list.type,
+                cost: list.cost,
+                timestamp: moment(list.timestamp).fromNow()
+            }
+        }) 
+
         // loop through all the entries in the action list 
-        for (let index = 0; index < actionList.length; index++) {
-            const action = actionList[index];
+        for (let index = 0; index < realTime.length; index++) {
+            const action = realTime[index];
             // check this is the type we are doing the total for 
             if (action.type === type) {
                 // add the action to the list

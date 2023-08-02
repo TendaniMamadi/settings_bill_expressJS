@@ -2,7 +2,7 @@ import express from 'express';
 import {engine} from 'express-handlebars';
 import bodyParser from 'body-parser';
 import SettingsBill from './settings-bill.js';
-// import moment from "moment/moment.js";
+import moment from "moment/moment.js";
 
 const app = express();
 const settingsBill = SettingsBill();
@@ -66,7 +66,7 @@ app.get('/actions', function (req, res) {
     const realTime = settingsBill.actions().map(list => {
 
         return{
-            type: list.action,
+            type: list.type,
             cost: list.cost,
             timestamp: moment(list.timestamp).fromNow()
         }
